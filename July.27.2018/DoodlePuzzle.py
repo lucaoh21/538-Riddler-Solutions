@@ -89,7 +89,7 @@ def testStrat(puzzle, i, j):
     """    
     puzzle.addMove(i, j)
     if puzzle.isSolved():
-        puzzle.printStack()    
+        #puzzle.printStack()    
     else:
         #test each of the 8 possible moves from any given position
         if (i + 3) < 5 and puzzle.isCellEmpty(i+3, j):

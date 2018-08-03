@@ -33,7 +33,8 @@ class FlippingCoins:
             self.numHeadsNeeded -= 1
         else:
             self.numTails += 1
-            self.numHeadsNeeded = self.numTails
+            # you always need to flip 1 more head than fails flipped previously
+            self.numHeadsNeeded = self.numTails + 1
             
     def checkWin(self):
         """Function to check if the game has been won"""

@@ -14,11 +14,11 @@ The apricots are now 98% water, which means that the other substance now compris
 >
 >What are my chances of winning this game? (A computer program could calculate the probability to any degree of precision, but is there a more elegant mathematical expression for the probability of winning?)
 
-**Solution**: You have a **2/3** chance (0.6666667) to win the game.
+**Solution**: You have a **0.7112119**% chance to win the game.
 
-I originally built a simulator for this game (which you can easily run for any number of trials and coin flips with the python file above), but I figured I should find the "elegant mathematical expression." 
+I originally built a simulator for this game (which you can easily run for any number of trials and coin flips with the python file above), but I figured I should try to find the "elegant mathematical expression." With 1,000,000 trials and a coin flip depth of 500 on my simulator I got a value of 0.71121190.
 
-If we flip the coin once, we have a 50% chance of winning the game. However, if we land tails then we will need to get two heads in a row. You have a 25% chance to land two heads in a row. So with three flips of the coin, we win the game 50% of the time by landing heads first, but in the 50% of games we land tails first we have an additional 25% of winning.
+My line of thought was that if we flip the coin once, we have a 50% chance of winning the game. However, if we land tails then we will need to get two heads in a row. You have a 25% chance to land two heads in a row. So with three flips of the coin, we win the game 50% of the time by landing heads first, but in the 50% of games we land tails first we have an additional 25% of winning.
 
 <p align="center">
   <img src="http://latex.codecogs.com/gif.latex?0.5%20&plus;%20%280.5%5Ccdot0.25%29%20%3D%200.625" alt="equation"/>
@@ -30,25 +30,26 @@ If we extend this to five coin flips we have a 50% chance of heads first, a 25% 
   <img src="http://latex.codecogs.com/gif.latex?0.5%20&plus;%20%280.5%5Ccdot%200.25%29%20&plus;%20%280.5%5Ccdot%200.5%5Ccdot%200.125%29%20%3D%200.65625" alt="equation"/>
 </p>
 
-At this point we can see a patter forming. Pulling the pieces apart we see...
+At first I thought it would be as easy as finding the solution to the geometric series that appears to be forming. But through my simulator I realized my values were off, and that the number of possible solutions for the number of allowed coin flips grows in a very odd pattern. I noticed that with 1 coin flip there is 1 possibility to win. With 2 coin flips that number does not increase. I layed more of these out in the chart below.
+
+| # Coin Flips | # Solutions|
+-------------|---------------
+1 | 1
+2 | 1
+3 | 2
+4 | 2
+5 | 3
+6 | 4
+7 | 5
+8 | 7
+9 | 10
+10 | 14
+
+I couldn't find a correlation in the growth of the solutions so I went back to the value my simulator produced. After searching online it turns out someone else was also looking for the mathematical expression for the value 0.711211, and found that the equation uses the Q-Pochhammer symbol. After another quick search I found the expression I was looking for.
 
 <p align="center">
-  <img src="http://latex.codecogs.com/gif.latex?%5Cfrac%7B1%7D%7B2%5E%7Bn%7D%7D%5Ccdot%200.5%5E%7Bn-1%7D" alt="equation"/>
+  <img src="http://latex.codecogs.com/gif.latex?1%20-%20Q%5B%5Cfrac%7B1%7D%7B2%7D%5D%3D0.7112119" alt="equation"/>
 </p>
 
-and with some reorganizing we get...
-
-<p align="center">
-  <img src="http://latex.codecogs.com/gif.latex?0.5%5Ccdot%200.25%5E%7Bn-1%7D" alt="equation"/>
-</p>
-
-This looks like a geometric series so we can use the basic geometric formula to find the answer.
-
-<p align="center">
-  <img src="http://latex.codecogs.com/gif.latex?%5Csum_%7Bk%3D0%7D%5E%7Bn-1%7D%28ar%5E%7Bk%7D%29%3Da%28%5Cfrac%7B1-r%5E%7Bn%7D%7D%7B1-r%7D%29" alt="equation"/>
-</p>
-<p align="center">
-  <img src="http://latex.codecogs.com/gif.latex?%5Csum_%7Bk%3D0%7D%5E%7Bn-1%7D%280.5%5Ccdot%200.25%5E%7Bk%7D%29%3D0.5%28%5Cfrac%7B1-0.25%5E%7Bn%7D%7D%7B1-0.25%7D%29%3D0.66666667" alt="equation"/>
-</p>
-
+Credit for this equation goes to [Reddit Math](https://www.reddit.com/r/math/comments/172jjw/how_can_one_determine_the_limit_of_the/).
 

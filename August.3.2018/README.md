@@ -30,7 +30,7 @@ If we extend this to five coin flips we have a 50% chance of heads first, a 25% 
   <img src="http://latex.codecogs.com/gif.latex?0.5%20&plus;%20%280.5%5Ccdot%200.25%29%20&plus;%20%280.5%5Ccdot%200.5%5Ccdot%200.125%29%20%3D%200.65625" alt="equation"/>
 </p>
 
-At first I thought it would be as easy as finding the solution to the geometric series that appears to be forming. But through my simulator I realized my values were off, and that the number of possible solutions for the number of allowed coin flips grows in a very odd pattern. I noticed that with 1 coin flip there is 1 possibility to win. With 2 coin flips that number does not increase. I layed more of these out in the chart below.
+At first I thought it would be as easy as finding the solution to the geometric series that appears to be forming. But through my simulator I realized my values were off, and that the number of possible solutions for the number of allowed coin flips grows in a very odd pattern. I noticed that with 1 coin flip there is 1 possibility to win. With 2 coin flips that number does not increase. I laid out more of these in the chart below.
 
 | # Coin Flips | # Solutions|
 -------------|---------------
@@ -45,7 +45,7 @@ At first I thought it would be as easy as finding the solution to the geometric 
 9 | 10
 10 | 14
 
-I couldn't find a correlation in the growth of the solutions so I went back to the value my simulator produced. After searching online it turns out someone else was also looking for the mathematical expression for the value 0.711211, and found that the equation uses the Q-Pochhammer symbol. After another quick search I found the expression I was looking for.
+I couldn't find a correlation in the growth of the solutions so I went back to the value my simulator produced. After searching online it turns out someone else was also looking for the mathematical expression for the value 0.71121190, and found that the equation uses the Q-Pochhammer symbol. After another quick search I found the expression I was looking for.
 
 <p align="center">
   <img src="http://latex.codecogs.com/gif.latex?1%20-%20Q%5B%5Cfrac%7B1%7D%7B2%7D%5D%3D0.7112119" alt="equation"/>

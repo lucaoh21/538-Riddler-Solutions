@@ -29,7 +29,7 @@ class FlippingCoins:
         the number of heads requried thereafter.
         """
         # 0 will be heads, 1 will be false
-        if rd.randint(0, 1) == 0:
+        if rd.randint(0, 1) == 1:
             self.numHeadsNeeded -= 1
         else:
             self.numTails += 1
@@ -53,7 +53,6 @@ def testCoins(numTests, maxFlips):
     numLosses = 0
     
     while(numTests > 0):
-        
         flipsLeft = maxFlips
         coin = FlippingCoins()
         while(flipsLeft > 0):
@@ -63,12 +62,11 @@ def testCoins(numTests, maxFlips):
                 break
             flipsLeft -= 1
             
-        if not coin.checkWin():
+        if flipsLeft <= 0:
             numLosses += 1
         numTests -= 1
         
     print("Number of wins: {0}".format(numWins))
     print("Number of losses: {0}".format(numLosses))
     print("Win percentage: {0}".format(float(numWins)/(numWins+numLosses)))
-                
-        
+

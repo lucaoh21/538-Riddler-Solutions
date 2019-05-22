@@ -1,15 +1,18 @@
+import java.util.LinkedList;
 
 public class Vertex {
-	private int xCoor, yCoor;
+	private int xCoor, yCoor, distance;
 	private Integer code;
-	private boolean inPath, visited, endNode;
+	private boolean visited, endNode;
+	private LinkedList<Vertex> shortestPath;
 	
 	public Vertex(int xCoor, int yCoor) {
 		this.xCoor = xCoor;
 		this.yCoor = yCoor;
 		code = new Integer(((xCoor + yCoor) * (xCoor + yCoor + 1)) / 2 + yCoor);
-		inPath = false;
+		distance = Integer.MAX_VALUE;
 		visited = false;
+		shortestPath = new LinkedList<Vertex>();
 	}
 
 	public int getxCoor() {
@@ -28,20 +31,20 @@ public class Vertex {
 		this.yCoor = yCoor;
 	}
 
+	public int getDistance() {
+		return distance;
+	}
+
+	public void setDistance(int distance) {
+		this.distance = distance;
+	}
+
 	public Integer getCode() {
 		return code;
 	}
 
 	public void setCode(Integer code) {
 		this.code = code;
-	}
-
-	public boolean isInPath() {
-		return inPath;
-	}
-
-	public void setInPath(boolean inPath) {
-		this.inPath = inPath;
 	}
 
 	public boolean isVisited() {
@@ -58,6 +61,14 @@ public class Vertex {
 
 	public void setEndNode(boolean endNode) {
 		this.endNode = endNode;
+	}
+
+	public LinkedList<Vertex> getShortestPath() {
+		return shortestPath;
+	}
+
+	public void setShortestPath(LinkedList<Vertex> shortestPath) {
+		this.shortestPath = shortestPath;
 	}
 
 }

@@ -1,6 +1,7 @@
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
+import java.util.LinkedList;
 import java.util.Set;
 
 public class Maze {
@@ -131,23 +132,107 @@ public class Maze {
 		
 	}
 	
+	public static Vertex findClosest(Set<Vertex> visitedNodes) {
+		Vertex next = null;
+		int distance = Integer.MAX_VALUE;
+		for (Vertex node : visitedNodes) {
+			if (node.getDistance() < distance) {
+				next = node;
+				distance = next.getDistance();
+			}
+		}
+		
+		return next;
+	}
+	
+	public static void explore(Vertex current, Vertex next, Set<Vertex> visitedNodes, Set<Vertex> finishedNodes) {
+		int code = cantorPairing(current.getCode(), next.getCode());
+		if (colors.contains(maze.getEdgeColors().get(code))) {
+			if (!finishedNodes.contains(next)) {
+				int distance = current.getDistance();
+				if (distance + 1 < next.getDistance()) {
+					next.setDistance(distance + 1);
+					LinkedList<Vertex> shortestPath = new LinkedList<Vertex>(current.getShortestPath());
+					shortestPath.add(next);
+					next.setShortestPath(shortestPath);
+				}
+				visitedNodes.add(next);
+			}
+		}
+	}
+	
+	public static LinkedList<Vertex> dijkstra(Vertex start) {
+		Set<Vertex> finishedNodes = new HashSet<Vertex>();
+		Set<Vertex> visitedNodes = new HashSet<Vertex>();
+		
+		visitedNodes.add(start);
+		
+		while (visitedNodes.size() != 0) {
+			Vertex node = findClosest(visitedNodes);
+			visitedNodes.remove(node);
+			
+			if (node.isEndNode()) {
+				return node.getShortestPath();
+			}
+			
+			//check left neighbor
+			if (node.getxCoor() - 1 >= 0) {
+				Vertex next = maze.getGraph()[node.getyCoor()][node.getxCoor() - 1];
+				explore(node, next, visitedNodes, finishedNodes);
+			}
+			//check left neighbor
+			if (node.getxCoor() + 1 < maze.getxLength()) {
+				Vertex next = maze.getGraph()[node.getyCoor()][node.getxCoor() + 1];
+				explore(node, next, visitedNodes, finishedNodes);
+			}
+			//check left neighbor
+			if (node.getyCoor() - 1 >= 0) {
+				Vertex next = maze.getGraph()[node.getyCoor() - 1][node.getxCoor()];
+				explore(node, next, visitedNodes, finishedNodes);
+			}
+			//check left neighbor
+			if (node.getyCoor() + 1 < maze.getyLength()) {
+				Vertex next = maze.getGraph()[node.getyCoor() + 1][node.getxCoor()];
+				explore(node, next, visitedNodes, finishedNodes);
+			}
+			finishedNodes.add(node);
+		}
+		return null;
+	}
+	
 	public static int cantorPairing (int x, int y) {
 		return ((x + y) * (x + y + 1)) / 2 + y;
 	}
 	
 	public static void main(String[] args) {
 		
-		colors = new HashSet<String>(Arrays.asList(RED_COLORS));
-		path = new ArrayList<Vertex>();
-		sequence = new ArrayList<String>();
-		
+		colors = new HashSet<String>(Arrays.asList(BLUE_COLORS));
 		Graph maze = constructRiddlerGraph();
 		maze.getGraph()[1][8].setEndNode(true);
 		
-		boolean foundPath = findPossiblePath(maze.getGraph()[7][0]);
-		if (foundPath) {
-			for (int i = 0; i < path.size(); i++) {
-				System.out.println("[" + path.get(i).getxCoor() + "," + path.get(i).getyCoor() +"] " + sequence.get(i));
+		boolean dijkstra = true;
+		if (dijkstra) {
+			maze.getGraph()[7][0].setDistance(0);
+			LinkedList<Vertex> foundPath = dijkstra(maze.getGraph()[7][0]);
+			for (Vertex node : foundPath) {
+				System.out.println("[" + node.getxCoor() + "," + node.getyCoor() +"]");
+			}
+			System.out.println(foundPath.size());
+		}
+		
+		System.out.println();
+		
+		boolean DFS = true;
+		if (DFS) {
+			path = new ArrayList<Vertex>();
+			sequence = new ArrayList<String>();
+			
+			boolean foundPath = findPossiblePath(maze.getGraph()[7][0]);
+			if (foundPath) {
+				for (int i = path.size() - 1; i >= 0; i--) {
+					System.out.println("[" + path.get(i).getxCoor() + "," + path.get(i).getyCoor() +"] " + sequence.get(i));
+				}
+				System.out.println(path.size());
 			}
 		}
 	}

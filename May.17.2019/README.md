@@ -2,7 +2,7 @@
 
 >**Riddler Express:** In grade school, you may have learned about the three primary colors — blue, yellow and red — and the three secondary colors — green (blue + yellow), purple (red + blue) and orange (yellow + red). And now it’s time to put that knowledge to use. Try to get through the maze below, a nine-by-nine grid of lines, three times: once as blue, once as yellow, and once as red. If you are blue, you may only travel on lines that include the color blue. So you may travel on lines that are blue, green, purple or white (which contains all colors). You may not travel on orange, yellow, red or black (which contains no colors). The analogous rules hold for your trips as yellow and red.
 
-![Maze Diagram](Diagram.jpg)
+<img src="Diagram.jpg" width="500">
 
 **Solution**:
 
